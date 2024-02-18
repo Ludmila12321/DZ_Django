@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from models import Client, Product, Order
+from .models import Client, Product, Order
 
 # Для клиента
 def create_client(request):
