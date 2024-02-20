@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
+from datetime import datetime, timedelta
 from .models import Client, Product, Order
 
 # Для клиента
@@ -89,3 +90,44 @@ def delete_order(request, order_id):
     order = Order.objects.get(id=order_id)
     order.delete()
     return JsonResponse({'message': 'Order deleted successfully'}, status=204)
+
+#Создание главной страницы
+def index(request):
+    return render(request, 'index.html')
+
+
+# Вывод списока заказанных клиентом товаров
+def index(request):
+    if request.method == 'POST':
+        client_name = request.POST.get('client_name')
+        days = int(request.POST.get('days'))
+
+        if days in [7, 30, 365]:
+            today = datetime.now().date()
+            start_date = today - timedelta(days=days)
+
+            try:
+                client = Client.objects.get(name=client_name)
+                orders = Order.objects.filter(client=client, order_date__range=[start_date, today])
+
+                ordered_products_list = []
+                unique_products = set()
+                for order in orders:
+                    for product in order.products.all():
+                        if product not in unique_products:
+                            ordered_products_list.append(product)
+                            unique_products.add(product)
+
+                context = {
+                    'ordered_products': ordered_products_list,
+                    'days': days
+                }
+                return render(request, 'ordered_products.html', context)
+                
+            except Client.DoesNotExist:
+                return HttpResponse("Client not found")
+
+        else:
+            return HttpResponse("Invalid number of days")
+    
+    return render(request, 'index.html')
