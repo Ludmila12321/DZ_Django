@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'dz_1_app',
     'dz_2_app',
     'dz_4_app',
+    'dz_5_app',
 ]
 
 MIDDLEWARE = [
@@ -106,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
