@@ -1,0 +1,10 @@
+asgiref==3.7.2
+autopep8==2.0.4
+Django==5.0.2
+#django-debug-toolbar==4.3.0
+pillow==10.2.0
+pycodestyle==2.11.1
+sqlparse==0.4.4
+tzdata==2023.4
+mysqlclient
+python-dotenv
